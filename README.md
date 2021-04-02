@@ -16,5 +16,6 @@ This project was bootstrapped with Create React App.
 - Create, Read, Update and Delete from firebase/firestore with React.
 - Currently still under construction.
 
-Author
-Nay Myo Lwin
+# Author
+
+- Nay Myo Lwin

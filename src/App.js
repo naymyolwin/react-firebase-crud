@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from "./firebase";
+import Login from "./login";
 
 class App extends React.Component {
   state = {
@@ -37,6 +38,7 @@ class App extends React.Component {
             <li key={user.name}>{user.name}</li>
           ))}
         </ul>
+        <Login />
       </div>
     );
   }
