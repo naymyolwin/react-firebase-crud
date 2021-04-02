@@ -1,31 +1,44 @@
 import React from "react";
-
 import firebase from "./firebase";
 
-function App() {
-  const [users, setUsers] = React.useState([]);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      await db.collection("users").onSnapshot((docs) => {
-        setUsers(docs.docs.map((doc) => doc.data()));
+class App extends React.Component {
+  state = {
+    users: [],
+    ref: firebase.firestore().collection("users"),
+  };
+
+  async getUsers() {
+    await this.state.ref.onSnapshot((snap) => {
+      const item = [];
+      snap.forEach((name) => {
+        item.push(name.data());
       });
-    };
-    fetchData();
-  }, []);
+      this.setState(
+        {
+          users: item,
+        },
+        () => {
+          console.log(this.state.users);
+        }
+      );
+    });
+  }
 
-  // db.collection("cities").doc("SF")
-  // .onSnapshot((doc) => {
-  //     console.log("Current data: ", doc.data());
-  // });
+  componentDidMount() {
+    this.getUsers();
+  }
 
-  return (
-    <ul>
-      {users.map((user) => (
-        <li key={user.name}>{user.name}</li>
-      ))}
-    </ul>
-  );
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.state.users.map((user) => (
+            <li key={user.name}>{user.name}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default App;
