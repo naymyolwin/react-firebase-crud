@@ -5,6 +5,8 @@ import Login from "./login";
 class App extends React.Component {
   state = {
     users: [],
+    email: "",
+    password: "",
     ref: firebase.firestore().collection("users"),
   };
 
@@ -14,17 +16,16 @@ class App extends React.Component {
       snap.forEach((name) => {
         item.push(name.data());
       });
-      this.setState(
-        {
-          // users: item.sort("id"),
-          users: item.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
-        },
-        () => {
-          console.log(this.state.users);
-        }
-      );
+      this.setState({
+        // users: item.sort("id"),
+        users: item.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
+      });
     });
   }
+
+  handleInput = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   componentDidMount() {
     this.getUsers();
@@ -38,7 +39,11 @@ class App extends React.Component {
             <li key={user.name}>{user.name}</li>
           ))}
         </ul>
-        <Login />
+        <Login
+          handleInput={this.handleInput}
+          email={this.state.email}
+          password={this.state.password}
+        />
       </div>
     );
   }
