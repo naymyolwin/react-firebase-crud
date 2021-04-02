@@ -1,4 +1,4 @@
-react-firebase-crud project
+## react-firebase-crud project
 
 - this is the app just for learning purpose
 
@@ -6,9 +6,10 @@ react-firebase-crud project
 
 This project was bootstrapped with Create React App.
 
-Installing
-npm install
-npm start
+# Installing
+
+- npm install
+- npm start
 
 # About Project
 
