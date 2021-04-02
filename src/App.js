@@ -15,7 +15,8 @@ class App extends React.Component {
       });
       this.setState(
         {
-          users: item,
+          // users: item.sort("id"),
+          users: item.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
         },
         () => {
           console.log(this.state.users);
