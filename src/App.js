@@ -1,6 +1,7 @@
 import React from "react";
 import firebase from "./firebase";
 import Login from "./login";
+import Update from "./update";
 
 class App extends React.Component {
   state = {
@@ -34,6 +35,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <h1>List of Users</h1>
         <ul>
           {this.state.users.map((user) => (
             <li key={user.name}>{user.name}</li>
@@ -44,6 +46,7 @@ class App extends React.Component {
           email={this.state.email}
           password={this.state.password}
         />
+        <Update />
       </div>
     );
   }
