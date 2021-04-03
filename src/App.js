@@ -28,6 +28,27 @@ class App extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  async loginHandler(event, email, password) {
+    event.preventDefault();
+    await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(
+        (userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          console.log(user);
+          // ...
+        },
+        () => {}
+      )
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  }
+
   componentDidMount() {
     this.getUsers();
   }
@@ -36,6 +57,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>List of Users</h1>
+        <p>read from firebase and listed all the user below</p>
         <ul>
           {this.state.users.map((user) => (
             <li key={user.name}>{user.name}</li>
@@ -45,6 +67,9 @@ class App extends React.Component {
           handleInput={this.handleInput}
           email={this.state.email}
           password={this.state.password}
+          onClick={(event) => {
+            this.loginHandler(event, this.state.email, this.state.password);
+          }}
         />
         <Update />
       </div>

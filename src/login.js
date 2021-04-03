@@ -5,6 +5,7 @@ function login(props) {
   return (
     <div>
       <h1>Login Form</h1>
+      <p>use firebase auth for authentication process</p>
       <input
         type="email"
         name="email"
@@ -17,7 +18,7 @@ function login(props) {
         value={props.password}
         onChange={props.handleInput}
       />
-      <input type="submit" />
+      <input type="submit" value="login" onClick={props.onClick} />
     </div>
   );
 }
