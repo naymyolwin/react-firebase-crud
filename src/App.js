@@ -2,6 +2,8 @@ import React from "react";
 import firebase from "./firebase";
 import Login from "./login";
 import Update from "./update";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Mainpage from "./mainpage";
 
 class App extends React.Component {
   state = {
@@ -55,24 +57,32 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>List of Users</h1>
-        <p>read from firebase and listed all the user below</p>
-        <ul>
-          {this.state.users.map((user) => (
-            <li key={user.name}>{user.name}</li>
-          ))}
-        </ul>
-        <Login
-          handleInput={this.handleInput}
-          email={this.state.email}
-          password={this.state.password}
-          onClick={(event) => {
-            this.loginHandler(event, this.state.email, this.state.password);
-          }}
-        />
-        <Update />
-      </div>
+      <Router basename={process.env.PUBLIC_URL}>
+        <div>
+          <Switch>
+            <Route exact path="/">
+              <Mainpage users={this.state.users} />
+            </Route>
+            <Route path="/login">
+              <Login
+                handleInput={this.handleInput}
+                email={this.state.email}
+                password={this.state.password}
+                onClick={(event) => {
+                  this.loginHandler(
+                    event,
+                    this.state.email,
+                    this.state.password
+                  );
+                }}
+              />
+            </Route>
+            <Route path="/upate">
+              <Update />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

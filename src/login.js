@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 //import firebase from "./firebase";
 
 function login(props) {
@@ -19,6 +20,9 @@ function login(props) {
         onChange={props.handleInput}
       />
       <input type="submit" value="login" onClick={props.onClick} />
+      <Link to="/">
+        <input type="submit" value="cancel" />
+      </Link>
     </div>
   );
 }
