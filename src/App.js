@@ -8,8 +8,6 @@ import Mainpage from "./mainpage";
 class App extends React.Component {
   state = {
     users: [],
-    email: "",
-    password: "",
     ref: firebase.firestore().collection("users"),
   };
 
@@ -20,35 +18,9 @@ class App extends React.Component {
         item.push(name.data());
       });
       this.setState({
-        // users: item.sort("id"),
         users: item.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
       });
     });
-  }
-
-  handleInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  async loginHandler(event, email, password) {
-    event.preventDefault();
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(
-        (userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          console.log(user);
-          // ...
-        },
-        () => {}
-      )
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-      });
   }
 
   componentDidMount() {
@@ -64,18 +36,7 @@ class App extends React.Component {
               <Mainpage users={this.state.users} />
             </Route>
             <Route path="/login">
-              <Login
-                handleInput={this.handleInput}
-                email={this.state.email}
-                password={this.state.password}
-                onClick={(event) => {
-                  this.loginHandler(
-                    event,
-                    this.state.email,
-                    this.state.password
-                  );
-                }}
-              />
+              <Login />
             </Route>
             <Route path="/upate">
               <Update />

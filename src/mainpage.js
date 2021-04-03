@@ -12,7 +12,7 @@ function mainpage(props) {
         ))}
       </ul>
       <Link to="/login">
-        <input type="submit" value="Login" />
+        <input type="submit" value="update" />
       </Link>
     </div>
   );

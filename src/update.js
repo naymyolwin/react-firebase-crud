@@ -12,6 +12,7 @@ function update() {
       {/*need to be loop from firebase */}
       <input type="text" />
       <input type="submit" value="save" />
+      <input type="submit" value="logout" />
     </div>
   );
 }
