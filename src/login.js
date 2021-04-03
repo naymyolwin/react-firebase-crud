@@ -3,25 +3,30 @@ import { Link } from "react-router-dom";
 import Update from "./update";
 import firebase from "./firebase";
 
-class login extends React.Component {
+class Login extends React.Component {
   state = {
     email: "",
     password: "",
     loginStatus: false,
+    ref: firebase.auth(),
   };
 
   handleInput = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log(this.state.email);
+      console.log(this.state.password);
+    });
   };
 
-  async loginHandler(event, email, password) {
-    event.preventDefault();
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+  loginHandler = () => {
+    console.log("logging in");
+
+    this.state.ref
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((userCredential) => {
+        console.log("auth pass");
         this.setState({
-          loginuser: userCredential.user.email,
+          login: userCredential.user.email,
         });
       })
       .catch((error) => {
@@ -29,17 +34,17 @@ class login extends React.Component {
         var errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
-  }
+  };
 
   async getUsers() {
-    firebase.auth().onAuthStateChanged((user) => {
+    await firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.setState({
-          loginuser: true,
+          loginStatus: true,
         });
       } else {
         this.setState({
-          loginuser: false,
+          loginStatus: false,
         });
       }
     });
@@ -50,7 +55,7 @@ class login extends React.Component {
   }
 
   render() {
-    if (this.state.loginuser === false) {
+    if (this.state.loginStatus === false) {
       return (
         <div>
           <h1>Login Form</h1>
@@ -67,7 +72,7 @@ class login extends React.Component {
             value={this.state.password}
             onChange={this.handleInput}
           />
-          <input type="submit" value="login" onClick={this.onClick} />
+          <input type="submit" value="login" onClick={this.loginHandler} />
           <Link to="/">
             <input type="submit" value="cancel" />
           </Link>
@@ -79,4 +84,4 @@ class login extends React.Component {
   }
 }
 
-export default login;
+export default Login;
