@@ -13,8 +13,10 @@ This project was bootstrapped with Create React App.
 
 # About Project
 
-- Create, Read, Update and Delete from firebase/firestore with React.
-- Currently still under construction.
+- main page will show list from firebase
+- button update will direct to login page if not authenticated yet
+- otherwise, will redirect to update page where can add, remove and update
+- Functionality wise, working without error.
 
 # Author
 
