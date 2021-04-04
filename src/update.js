@@ -11,8 +11,14 @@ export class update extends Component {
   async getUsers() {
     await this.state.ref.onSnapshot((snap) => {
       const item = [];
-      snap.forEach((name) => {
-        item.push(name.data());
+
+      snap.forEach((user) => {
+        const docID = user.id;
+        item.push({
+          name: user.data().name,
+          id: user.data().id,
+          docID: docID,
+        });
       });
       this.setState({
         users: item.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0)),
@@ -37,14 +43,13 @@ export class update extends Component {
       });
   };
 
-  remove = (index) => {
-    console.log(index - 1);
+  remove = (user) => {
+    console.log(user.docID);
+    this.state.ref.doc(user.docID).delete();
 
-    this.setState({
-      temp: this.state.users.splice(index - 1, 1),
-      // tmp1 =temp.splice(index - 1, 1),
-      // users=
-    });
+    // this.setState({
+    //   temp: this.state.users.splice(user.id - 1, 1),
+    // });
   };
 
   render() {
@@ -67,7 +72,7 @@ export class update extends Component {
               value={user.name}
               onChange={this.updateHandler}
             />
-            <button onClick={() => this.remove(user.id)}>remove</button>
+            <button onClick={() => this.remove(user)}>remove</button>
           </div>
         ))}
 
