@@ -19,8 +19,6 @@ class Login extends React.Component {
   };
 
   loginHandler = () => {
-    console.log("logging in");
-
     this.state.ref
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((userCredential) => {
